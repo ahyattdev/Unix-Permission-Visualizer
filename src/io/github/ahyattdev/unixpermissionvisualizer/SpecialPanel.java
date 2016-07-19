@@ -2,9 +2,12 @@ package io.github.ahyattdev.unixpermissionvisualizer;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 public class SpecialPanel extends JPanel {
@@ -16,7 +19,7 @@ public class SpecialPanel extends JPanel {
 	
 	JCheckBox setuid, setgid, stickyBit;
 	
-	public SpecialPanel() {
+	public SpecialPanel(JTextField display, UserInterface ui) {
 		super(new GridBagLayout());
 		
 		String name = "Special";
@@ -27,6 +30,16 @@ public class SpecialPanel extends JPanel {
 		this.setuid = new JCheckBox("setuid");
 		this.setgid = new JCheckBox("setgid");
 		this.stickyBit = new JCheckBox("Sticky bit");
+		
+		ActionListener al = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ui.updateField();
+			}
+		};
+		
+		this.setuid.addActionListener(al);
+		this.setgid.addActionListener(al);
+		this.stickyBit.addActionListener(al);
 		
 		c.gridy = 0;
 		this.add(this.setuid, c);

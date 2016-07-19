@@ -2,9 +2,12 @@ package io.github.ahyattdev.unixpermissionvisualizer;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 public class PermissionPanel extends JPanel {
@@ -16,7 +19,7 @@ public class PermissionPanel extends JPanel {
 	
 	JCheckBox read, write, execute;
 	
-	public PermissionPanel(String name) {
+	public PermissionPanel(JTextField display, UserInterface ui, String name) {
 		super(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -25,6 +28,16 @@ public class PermissionPanel extends JPanel {
 		this.read = new JCheckBox("Read");
 		this.write = new JCheckBox("Write");
 		this.execute = new JCheckBox("Execute");
+		
+		ActionListener al = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ui.updateField();
+			}
+		};
+		
+		this.read.addActionListener(al);
+		this.write.addActionListener(al);
+		this.execute.addActionListener(al);
 		
 		c.gridy = 0;
 		this.add(this.read, c);

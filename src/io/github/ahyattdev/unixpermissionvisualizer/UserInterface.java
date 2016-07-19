@@ -1,6 +1,5 @@
 package io.github.ahyattdev.unixpermissionvisualizer;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -66,10 +65,10 @@ public class UserInterface {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		this.special = new SpecialPanel();
-		this.user = new PermissionPanel("User");
-		this.group = new PermissionPanel("Group");
-		this.other = new PermissionPanel("Other");
+		this.special = new SpecialPanel(display, this);
+		this.user = new PermissionPanel(display, this, "User");
+		this.group = new PermissionPanel(display, this, "Group");
+		this.other = new PermissionPanel(display, this, "Other");
 		
 		c.gridy = 0;
 		c.fill = GridBagConstraints.BOTH;
@@ -102,6 +101,45 @@ public class UserInterface {
 		
 		this.frame.pack();
 		this.frame.setVisible(true);
+	}
+	
+	int[] getNumbers() {
+		int special = 0;
+		int user = 0;
+		int group = 0;
+		int other = 0;
+		
+		if (this.special.setuid.isSelected()) special += 4;
+		if (this.special.setgid.isSelected()) special += 2;
+		if (this.special.stickyBit.isSelected()) special += 1;
+		
+		if (this.user.read.isSelected()) user += 4;
+		if (this.user.write.isSelected()) user += 2;
+		if (this.user.execute.isSelected()) user += 1;
+		
+		if (this.group.read.isSelected()) group += 4;
+		if (this.group.write.isSelected()) group += 2;
+		if (this.group.execute.isSelected()) group += 1;
+		
+		if (this.other.read.isSelected()) other += 4;
+		if (this.other.write.isSelected()) other += 2;
+		if (this.other.execute.isSelected()) other += 1;
+		
+		int[] numbers = { special, user, group, other };
+		return numbers;
+	}
+	
+	String getStringRep() {
+		int[] numbers = getNumbers();
+		String s = "";
+		for (int n : numbers) {
+			s += n;
+		}
+		return s;
+	}
+	
+	void updateField() {
+		this.display.setText(getStringRep());
 	}
 	
 }
