@@ -1,5 +1,8 @@
 package io.github.ahyattdev.unixpermissionvisualizer;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -18,6 +21,7 @@ public class UserInterface {
 	JFrame frame;
 	JTextField display;
 	
+	SpecialPanel special;
 	PermissionPanel user, group, other;
 	
 	public void createAndShowGUI() {
@@ -62,6 +66,7 @@ public class UserInterface {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
+		this.special = new SpecialPanel();
 		this.user = new PermissionPanel("User");
 		this.group = new PermissionPanel("Group");
 		this.other = new PermissionPanel("Other");
@@ -70,13 +75,28 @@ public class UserInterface {
 		c.fill = GridBagConstraints.BOTH;
 		
 		c.gridx = 0;
-		panel.add(user, c);
+		panel.add(this.special, c);
 		
 		c.gridx = 1;
-		panel.add(group, c);
+		panel.add(this.user, c);
 		
 		c.gridx = 2;
-		panel.add(other, c);
+		panel.add(this.group, c);
+		
+		c.gridx = 3;
+		panel.add(this.other, c);
+
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 4;
+		
+		JPanel displayPanel = new JPanel(new FlowLayout());
+		
+		this.display = new JTextField("0000");
+		Font font = new Font(this.display.getFont().getName(), Font.BOLD, 18);
+		this.display.setFont(font);
+		displayPanel.add(this.display);
+		panel.add(displayPanel, c);
 		
 		this.frame.add(panel);
 		
