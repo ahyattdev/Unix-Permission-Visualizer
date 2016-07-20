@@ -7,19 +7,44 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+/**
+ * A <code>JPanel</code> that respresents the permission octal of the specified name.
+ * 
+ * @author Andrew Hyatt
+ *
+ */
 public class PermissionPanel extends JPanel {
 
 	/**
-	 * Not sure why this is necessary
+	 * Not sure why this is necessary.
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	JCheckBox read, write, execute;
+	/**
+	 * Represents the read bit.
+	 */
+	JCheckBox read;
 	
-	public PermissionPanel(JTextField display, UserInterface ui, String name) {
+	/**
+	 * Represents the write bit.
+	 */
+	JCheckBox write;
+	
+	/**
+	 * Represents the execute bit.
+	 */
+	JCheckBox execute;
+	
+	/**
+	 * Creates a <code>JPanel</code> with a border that contains three
+	 * permission checkboxes which are accessible through fields of this class.
+	 * 
+	 * @param ui Used for adding an action listener for when a checkbox state changes.
+	 * @param name The name to use as a label for the border of the panel.
+	 */
+	public PermissionPanel(UserInterface ui, String name) {
 		super(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();

@@ -12,17 +12,55 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * The class responsible for creating the GUI.
+ * 
+ * @author Andrew Hyatt
+ *
+ */
 public class UserInterface {
 	
+	/**
+	 * The main <code>JFrame</code>.
+	 * It is <code>null</code> until {@link #createAndShowGUI()} is called.
+	 */
 	JFrame frame;
+	
+	/**
+	 * The <code>JTextfield</code> responsible for displaying the 4 permission octals.
+	 */
 	JTextField display;
 	
+	/**
+	 * A <code>JPanel</code> representing the special permission octal.
+	 */
 	SpecialPanel special;
-	PermissionPanel user, group, other;
 	
+	/**
+	 * A <code>JPanel</code> representing the user permission octal. 
+	 */
+	PermissionPanel user;
+	
+	/**
+	 * A <code>JPanel</code> representing the group permission octal.
+	 */
+	PermissionPanel group;
+	
+	/**
+	 * A <code>JPanel</code> representing the other permission octal.
+	 */
+	PermissionPanel other;
+	
+	/**
+	 * Creates and displays the main <code>JFrame</code>.
+	 * 
+	 * @see SpecialPanel
+	 * @see PermissionPanel
+	 */
 	public void createAndShowGUI() {
 		this.frame = new JFrame("Unix Permission Visualizer");
 		this.frame.setResizable(false);
@@ -40,21 +78,11 @@ public class UserInterface {
 		fileMenu.add(exit);
 		menuBar.add(fileMenu);
 		
-		JMenu editMenu = new JMenu("Edit");
-		JMenuItem copy = new JMenuItem("Copy");
-		copy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		editMenu.add(copy);
-		menuBar.add(editMenu);
-		
 		JMenu helpMenu = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About Unix Permission Visualizer");
 		about.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				JOptionPane.showMessageDialog(frame, Main.description);
 			}
 		});
 		helpMenu.add(about);
@@ -65,10 +93,10 @@ public class UserInterface {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		this.special = new SpecialPanel(display, this);
-		this.user = new PermissionPanel(display, this, "User");
-		this.group = new PermissionPanel(display, this, "Group");
-		this.other = new PermissionPanel(display, this, "Other");
+		this.special = new SpecialPanel(this);
+		this.user = new PermissionPanel(this, "User");
+		this.group = new PermissionPanel(this, "Group");
+		this.other = new PermissionPanel(this, "Other");
 		
 		c.gridy = 0;
 		c.fill = GridBagConstraints.BOTH;
@@ -100,9 +128,23 @@ public class UserInterface {
 		this.frame.add(panel);
 		
 		this.frame.pack();
+		
+		this.frame.setLocationRelativeTo(null);
+		
 		this.frame.setVisible(true);
 	}
 	
+	/**
+	 * Creates the four Unix permission octals from the checkboxes
+	 * and puts them in an array.
+	 * 
+	 * @return An int array with four elements.
+	 * The first is the special octal, second is the user octal, third is the group octal
+	 * and fourth is the other octal.
+	 * 
+	 * @see PermissionPanel
+	 * @see SpecialPanel
+	 */
 	int[] getNumbers() {
 		int special = 0;
 		int user = 0;
@@ -129,6 +171,12 @@ public class UserInterface {
 		return numbers;
 	}
 	
+	/**
+	 * Combines the four elements of the array returned by <code>getNumbers()</code>
+	 * into <code>String</code> that is suitable for presenting to the user.
+	 * 
+	 * @return A string that is suitable for presenting to the user.
+	 */
 	String getStringRep() {
 		int[] numbers = getNumbers();
 		String s = "";
@@ -138,6 +186,10 @@ public class UserInterface {
 		return s;
 	}
 	
+	/**
+	 * Updates the contents of {@link #display} with contents that is generated from
+	 * the checkboxes.
+	 */
 	void updateField() {
 		this.display.setText(getStringRep());
 	}

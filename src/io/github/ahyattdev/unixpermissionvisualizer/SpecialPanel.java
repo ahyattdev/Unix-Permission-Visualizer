@@ -7,19 +7,45 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+/**
+ * A panel that is only used to represent the special permission octal.
+ * 
+ * @author Andrew Hyatt
+ *
+ */
 public class SpecialPanel extends JPanel {
 	
 	/**
-	 * Not sure why this is necessary
+	 * Not sure why this is necessary.
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	JCheckBox setuid, setgid, stickyBit;
+	/**
+	 * Represents the setuid bit.
+	 */
+	JCheckBox setuid;
 	
-	public SpecialPanel(JTextField display, UserInterface ui) {
+	/**
+	 * Represents the setgid bit.
+	 */
+	JCheckBox setgid;
+	
+	/**
+	 * Represents the sticky bit.
+	 */
+	JCheckBox stickyBit;
+	
+	/**
+	 * Creates a <code>JPanel</code> with a border that contains three
+	 * permission checkboxes which are accessible through fields of this class.
+	 * 
+	 * The name is inferred to be <code>Special</code>.
+	 * 
+	 * @param ui Used for adding an action listener for when a checkbox state changes.
+	 */
+	public SpecialPanel(UserInterface ui) {
 		super(new GridBagLayout());
 		
 		String name = "Special";
