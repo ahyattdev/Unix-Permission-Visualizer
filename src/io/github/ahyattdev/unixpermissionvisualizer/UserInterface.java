@@ -69,7 +69,9 @@ public class UserInterface {
 		JMenuBar menuBar = new JMenuBar();
 		
 		JMenu fileMenu = new JMenu("File");
-		JMenuItem exit = new JMenuItem("Exit");
+		// Use "Quit" if running on Mac OS X
+		String exitName = System.getProperty("os.name").equals("Mac OS X") ? "Quit" : "Exit";
+		JMenuItem exit = new JMenuItem(exitName);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
