@@ -69,16 +69,17 @@ public class UserInterface {
 		JMenuBar menuBar = new JMenuBar();
 		
 		JMenu fileMenu = new JMenu("File");
-		// Use "Quit" if running on Mac OS X
-		String exitName = System.getProperty("os.name").equals("Mac OS X") ? "Quit" : "Exit";
-		JMenuItem exit = new JMenuItem(exitName);
+		JMenuItem exit = new JMenuItem("Exit");
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		fileMenu.add(exit);
-		menuBar.add(fileMenu);
+		if (!System.getProperty("os.name").equals("Mac OS X")) {
+			// This menu is redundant on Mac OS X
+			menuBar.add(fileMenu);
+		}
 		
 		JMenu helpMenu = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About Unix Permission Visualizer");

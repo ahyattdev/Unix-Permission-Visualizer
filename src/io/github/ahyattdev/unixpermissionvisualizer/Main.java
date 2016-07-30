@@ -33,12 +33,14 @@ public class Main {
 	 * @param args The arguments the program is launched with. Currently Unused.
 	 */
 	public static void main(String[] args) {
+    	System.setProperty("apple.laf.useScreenMenuBar", "true");
+    	System.setProperty("apple.awt.application.name", "Unix Permission Visualizer");
+    	
         ui = new UserInterface();
         
 	    try {
 	    	// Standard normalizations
 	    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-	    	System.setProperty("apple.laf.useScreenMenuBar", "true");
         } catch (Exception e) {
         	e.printStackTrace();
         }
